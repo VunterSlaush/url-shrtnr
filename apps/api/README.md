@@ -1,25 +1,32 @@
-# With-NestJs | API
+# URL Shortener API
 
-## Getting Started
+A RESTful API built with NestJS and TypeScript that provides URL shortening services, user management, and analytics tracking. This API serves as the backend for the URL Shortener application.
 
-First, run the development server:
+## Features
 
-```bash
-pnpm run dev
-```
+### Data Management
+- [ ] **PostgreSQL Integration**: Robust database operations with node-postgres
 
-By default, your server will run at [http://localhost:3000](http://localhost:3000). You can use your favorite API platform like [Insomnia](https://insomnia.rest/) or [Postman](https://www.postman.com/) to test your APIs
+### Core API Endpoints
+- [ ] **URL Management**: Create, retrieve, update, and delete shortened URLs
+- [ ] **URL Redirection**: Handle redirection from short URLs to original destinations
+- [ ] **Custom Slugs**: Support for user-defined custom URL slugs
+- [ ] **URL Validation**: Server-side validation of submitted URLs
 
-You can start editing the demo **APIs** by modifying [linksService](./src/links/links.service.ts) provider.
+### Authentication & Authorization
+- [ ] **JWT Authentication**: Secure token-based authentication system
+- [ ] **User Registration**: Account creation with OAuth GMail
+- [ ] **Protected Routes**: Secure endpoints requiring authentication
+- [ ] **User Session Management**: Handle login/logout and token refresh
 
-### ⚠️ Note about build
+### Analytics & Tracking
+- [ ] **Visit Analytics**: Track and store URL visit statistics
+- [ ] **Rate Limiting**: Implement intelligent rate limiting to prevent abuse
+- [ ] **Usage Metrics**: Collect data on URL usage patterns
 
-If you plan to only build this app. Please make sure you've built the packages first.
+## Technical Stack
 
-## Learn More
-
-To learn more about NestJs, take a look at the following resources:
-
-- [Official Documentation](https://docs.nestjs.com) - A progressive Node.js framework for building efficient, reliable and scalable server-side applications.
-- [Official NestJS Courses](https://courses.nestjs.com) - Learn everything you need to master NestJS and tackle modern backend applications at any scale.
-- [GitHub Repo](https://github.com/nestjs/nest)
+- **Framework**: NestJS with TypeScript
+- **Database**: PostgreSQL with node-postgres
+- **Authentication**: JWT tokens with OAuth2
+- **API Documentation**: Swagger/OpenAPI

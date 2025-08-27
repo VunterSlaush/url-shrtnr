@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "url-shrtnr",
   "version": "0.0.0",
   "private": true,
   "description": "",
@@ -7,9 +7,17 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "turbo run dev",
+    "dev:web": "turbo run dev --filter=web",
+    "dev:api": "turbo run dev --filter=api",
     "build": "turbo run build",
+    "build:web": "turbo run build --filter=web",
+    "build:api": "turbo run build --filter=api",
     "test": "turbo run test",
+    "test:web": "turbo run test --filter=web",
+    "test:api": "turbo run test --filter=api",
     "test:e2e": "turbo run test:e2e",
+    "test:e2e:web": "turbo run test:e2e --filter=web",
+    "test:e2e:api": "turbo run test:e2e --filter=api",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
