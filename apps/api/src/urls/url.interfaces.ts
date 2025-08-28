@@ -8,4 +8,4 @@ export type FindUrlBySlug = (slug: string) => Promise<Result<Url, AppError>>;
 export type FindUrlById = (id: string) => Promise<Result<Url, AppError>>;
 export type FindUrlsByUserId = (userId: string) => Promise<Result<Url[], AppError>>;
 export type UpdateUrl = (id: string, updateData: Partial<CreateUrlDto>) => Promise<Result<Url, AppError>>;
-export type DeleteUrl = (id: string) => Promise<Result<boolean, AppError>>;
+export type DeleteUrl = (id: string, userId: string) => Promise<Result<boolean, AppError>>;

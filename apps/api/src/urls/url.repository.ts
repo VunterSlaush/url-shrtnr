@@ -101,9 +101,9 @@ export class UrlRepository {
     }
   };
 
-  delete: DeleteUrl = async (id: string): Promise<Result<boolean, AppError>> => {
+  delete: DeleteUrl = async (id: string, userId: string): Promise<Result<boolean, AppError>> => {
     try {
-      const { query, values } = deleteUrlQuery(id);
+      const { query, values } = deleteUrlQuery(id, userId);
       const result = await this.pool.query(query, values);
       return ok(result.rowCount > 0);
     } catch (error) {

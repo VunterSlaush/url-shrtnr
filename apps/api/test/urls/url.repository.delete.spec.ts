@@ -21,13 +21,14 @@ describe('UrlRepository - delete', () => {
 
     describe('delete', () => {
         const urlId = 'url-123';
+        const userId = 'user-123';
 
         it('should successfully delete a URL', async () => {
             // Arrange
             mockPool.query.mockResolvedValue({ rowCount: 1 });
 
             // Act
-            const result = await urlRepository.delete(urlId);
+            const result = await urlRepository.delete(urlId, userId);
 
             // Assert
             expect(result.isOk()).toBe(true);
@@ -42,7 +43,7 @@ describe('UrlRepository - delete', () => {
             mockPool.query.mockResolvedValue({ rowCount: 0 });
 
             // Act
-            const result = await urlRepository.delete(urlId);
+            const result = await urlRepository.delete(urlId, userId);
 
             // Assert
             expect(result.isOk()).toBe(true);
@@ -57,7 +58,7 @@ describe('UrlRepository - delete', () => {
             mockPool.query.mockRejectedValue(mockError);
 
             // Act
-            const result = await urlRepository.delete(urlId);
+            const result = await urlRepository.delete(urlId, userId);
 
             // Assert
             expect(result.isErr()).toBe(true);
@@ -74,7 +75,7 @@ describe('UrlRepository - delete', () => {
             mockPool.query.mockRejectedValue(mockError);
 
             // Act
-            const result = await urlRepository.delete(urlId);
+            const result = await urlRepository.delete(urlId, userId);
 
             // Assert
             expect(result.isErr()).toBe(true);
@@ -91,7 +92,7 @@ describe('UrlRepository - delete', () => {
             mockPool.query.mockRejectedValue(mockError);
 
             // Act
-            const result = await urlRepository.delete(urlId);
+            const result = await urlRepository.delete(urlId, userId);
 
             // Assert
             expect(result.isErr()).toBe(true);
@@ -108,7 +109,7 @@ describe('UrlRepository - delete', () => {
             mockPool.query.mockRejectedValue(mockError);
 
             // Act
-            const result = await urlRepository.delete(urlId);
+            const result = await urlRepository.delete(urlId, userId);
 
             // Assert
             expect(result.isErr()).toBe(true);
@@ -124,7 +125,7 @@ describe('UrlRepository - delete', () => {
             mockPool.query.mockResolvedValue({ rowCount: 3 });
 
             // Act
-            const result = await urlRepository.delete(urlId);
+            const result = await urlRepository.delete(urlId, userId);
 
             // Assert
             expect(result.isOk()).toBe(true);
@@ -138,7 +139,7 @@ describe('UrlRepository - delete', () => {
             mockPool.query.mockResolvedValue({ rowCount: null });
 
             // Act
-            const result = await urlRepository.delete(urlId);
+            const result = await urlRepository.delete(urlId, userId);
 
             // Assert
             expect(result.isOk()).toBe(true);
@@ -152,7 +153,7 @@ describe('UrlRepository - delete', () => {
             mockPool.query.mockResolvedValue({ rowCount: undefined });
 
             // Act
-            const result = await urlRepository.delete(urlId);
+            const result = await urlRepository.delete(urlId, userId);
 
             // Assert
             expect(result.isOk()).toBe(true);

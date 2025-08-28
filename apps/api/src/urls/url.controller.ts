@@ -7,6 +7,8 @@ import { GetUrlBySlugUseCase } from './use-cases/get-url-by-slug.use-case';
 import { GetUrlsByUserUseCase } from './use-cases/get-urls-by-user.use-case';
 import { DeleteUrlUseCase } from './use-cases/delete-url.user-case';
 import { UpdateSlugUseCase } from './use-cases/update-slug.use-case';
+import { AuthUser } from 'src/auth/auth-user.decorator';
+import { User } from '@repo/api/users/user';
 
 @Controller('urls')
 export class UrlController {
@@ -19,9 +21,8 @@ export class UrlController {
     ) { }
 
     @Post()
-    async createUrl(@Body() createUrlDto: CreateUrlDto): Promise<Url> {
-        console.log(createUrlDto);
-        const result = await this.shortenUrlUseCase.execute(createUrlDto); // TODO: Add userId
+    async createUrl(@Body() createUrlDto: CreateUrlDto, @AuthUser() authUser?: User): Promise<Url> {
+        const result = await this.shortenUrlUseCase.execute(createUrlDto, authUser?.id);
 
         if (result.isErr()) {
             console.log(result.error);
@@ -43,9 +44,9 @@ export class UrlController {
     }
 
 
-    @Get('user/:userId')
-    async getUrlsByUser(@Param('userId') userId: string): Promise<Url[]> {
-        const result = await this.getUrlsByUserUseCase.execute(userId);
+    @Get()
+    async getUrlsByUser(@AuthUser() authUser: User): Promise<Url[]> {
+        const result = await this.getUrlsByUserUseCase.execute(authUser?.id);
 
         if (result.isErr()) {
             throw new HttpException(result.error.message, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -55,8 +56,8 @@ export class UrlController {
     }
 
     @Delete(':id')
-    async deleteUrl(@Param('id') id: string): Promise<{ success: boolean }> {
-        const result = await this.deleteUrlUseCase.execute(id);
+    async deleteUrl(@Param('id') id: string, @AuthUser() authUser: User): Promise<{ success: boolean }> {
+        const result = await this.deleteUrlUseCase.execute(id, authUser.id);
 
         if (result.isErr()) {
             throw new HttpException(result.error.message, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -69,9 +70,9 @@ export class UrlController {
     async updateSlug(
         @Param('id') id: string,
         @Body() body: UpdateSlugDto,
-
+        @AuthUser() authUser: User,
     ): Promise<Url> {
-        const result = await this.updateSlugUseCase.execute(id, body.slug); // TODO
+        const result = await this.updateSlugUseCase.execute(id, body.slug, authUser.id);
 
         if (result.isErr()) {
             throw new HttpException(result.error.message, HttpStatus.BAD_REQUEST);

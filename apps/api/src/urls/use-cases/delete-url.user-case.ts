@@ -7,7 +7,7 @@ export class DeleteUrlUseCase {
         private readonly deleteUrl: DeleteUrl,
     ) { }
 
-    async execute(id: string): Promise<Result<boolean, AppError>> {
-        return this.deleteUrl(id);
+    async execute(id: string, userId: string): Promise<Result<boolean, AppError>> {
+        return this.deleteUrl(id, userId);
     }
 }
