@@ -5,6 +5,7 @@ import { PgModule } from './postgres/pg.module';
 import { UrlModule } from './urls/url.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { UrlTrackingModule } from './url-tracking/url-tracking.module';
 
 
 @Module({
@@ -17,6 +18,7 @@ import { UserModule } from './user/user.module';
     UrlModule,
     AuthModule,
     UserModule,
+    UrlTrackingModule,
   ],
   controllers: [AppController],
   providers: [],

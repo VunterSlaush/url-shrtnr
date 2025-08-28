@@ -1,4 +1,4 @@
-import { Controller, Get, Param, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from '@repo/api/users/user';
 import { GetUserProfileUseCase } from './use-cases/get-user-profile.use-case';
 import { AuthUser } from 'src/auth/auth-user.decorator';
