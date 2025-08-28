@@ -3,8 +3,9 @@ import { config as baseConfig } from './base';
 
 export const nestConfig = {
   ...baseConfig,
-  rootDir: 'src',
-  testRegex: '.*spec\\.ts$',
+  rootDir: '.',
+  testRegex: '.*\\.spec\\.ts$',
+  coveragePathIgnorePatterns: ['./test/'],
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },

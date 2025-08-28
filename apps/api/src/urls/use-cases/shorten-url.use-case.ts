@@ -1,8 +1,10 @@
 import { Result, err } from 'neverthrow';
 import { CreateUrlDto } from '@repo/api/urls/create-url.dto';
 import { Url } from '@repo/api/urls/url';
+import { AppError, AppErrorType } from '@repo/api/error';
 import { CreateUrl, FindUrlBySlug } from '../url.interfaces';
 
+const URL_VALIDATION_REGEX = /^(https?:\/\/)?((([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))(:\d+)?(\/[^\s]*)?$/i;
 
 export class ShortenUrlUseCase {
     constructor(
@@ -10,44 +12,37 @@ export class ShortenUrlUseCase {
         private readonly findUrlBySlug: FindUrlBySlug,
     ) { }
 
-    async execute(createUrlDto: CreateUrlDto, userId?: string): Promise<Result<Url, Error>> {
+    async execute(createUrlDto: CreateUrlDto, userId?: string): Promise<Result<Url, AppError>> {
         try {
 
             if (createUrlDto.url === undefined || createUrlDto.url === null || createUrlDto.url.length === 0) {
-                return err(new Error('Url is required')); // TODO: Add Typification
+                return err(AppError.validation('Url is required'));
             }
 
             if (!this.isValidUrl(createUrlDto.url)) {
-                return err(new Error('Invalid Url format')); // TODO: Add Typification
+                return err(AppError.validation('Invalid Url format'));
             }
 
             if (createUrlDto.slug) {
                 const existingUrlResult = await this.findUrlBySlug(createUrlDto.slug);
                 if (existingUrlResult.isOk()) {
-                    return err(new Error('Slug already exists')); // TODO: Add Typification
+                    return err(AppError.conflict('Slug already exists'));
+                } else if (existingUrlResult.isErr() && existingUrlResult.error.type !== AppErrorType.NOT_FOUND) {
+                    return existingUrlResult;
                 }
             } else {
                 createUrlDto.slug = this.generateSlug();
-
             }
 
-            // Create the new URL
-            return this.createUrl(createUrlDto, userId);
+            return await this.createUrl(createUrlDto, userId);
         } catch (error) {
-            return err(error instanceof Error ? error : new Error('Failed to shorten URL'));
+            return err(AppError.unhandled('Failed to shorten URL', error));
         }
     }
 
 
     isValidUrl(url: string): boolean {
-        try {
-            // If URL doesn't start with a protocol, prepend https://
-            const urlToValidate = url.match(/^https?:\/\//) ? url : `https://${url}`;
-            new URL(urlToValidate);
-            return true;
-        } catch {
-            return false;
-        }
+        return URL_VALIDATION_REGEX.test(url);
     }
 
 

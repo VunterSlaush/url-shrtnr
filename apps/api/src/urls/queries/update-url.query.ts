@@ -1,3 +1,5 @@
+import { AppError } from '@repo/api/error';
+
 /**
  * SQL query to update a URL record
  * 
@@ -22,7 +24,7 @@ export const updateUrlQuery = (updateData: { url?: string; slug?: string }, id: 
   }
 
   if (setClauses.length === 0) {
-    throw new Error('No fields to update');
+    throw AppError.validation('No fields to update');
   }
 
   return {

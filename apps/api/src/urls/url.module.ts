@@ -5,60 +5,62 @@ import { GetUrlBySlugUseCase } from './use-cases/get-url-by-slug.use-case';
 import { GetUrlsByUserUseCase } from './use-cases/get-urls-by-user.use-case';
 import { DeleteUrlUseCase } from './use-cases/delete-url.user-case';
 import { UpdateSlugUseCase } from './use-cases/update-slug.use-case';
-import { PgModule } from 'src/postgres/pg.module';
 import { UrlRepository } from './url.repository';
+import { PgModule } from '../postgres/pg.module';
 
 
 const shortenUrlUseCaseProvider = {
-  provide: ShortenUrlUseCase,
-  inject: [UrlRepository],
-  useFactory: (urlRepository: UrlRepository) => {
-    return new ShortenUrlUseCase(urlRepository.create, urlRepository.findBySlug);
-  }
+    provide: ShortenUrlUseCase,
+    inject: [UrlRepository],
+    useFactory: (urlRepository: UrlRepository) => {
+        return new ShortenUrlUseCase(urlRepository.create, urlRepository.findBySlug);
+    }
 };
 
 const getUrlBySlugUseCaseProvider = {
-  provide: GetUrlBySlugUseCase,
-  inject: [UrlRepository],
-  useFactory: (urlRepository: UrlRepository) => {
-    return new GetUrlBySlugUseCase(urlRepository.findBySlug);
-  }
+    provide: GetUrlBySlugUseCase,
+    inject: [UrlRepository],
+    useFactory: (urlRepository: UrlRepository) => {
+        return new GetUrlBySlugUseCase(urlRepository.findBySlug);
+    }
 };
 
 const getUrlsByUserUseCaseProvider = {
-  provide: GetUrlsByUserUseCase,
-  inject: [UrlRepository],
-  useFactory: (urlRepository: UrlRepository) => {
-    return new GetUrlsByUserUseCase(urlRepository.findByUserId);
-  }
+    provide: GetUrlsByUserUseCase,
+    inject: [UrlRepository],
+    useFactory: (urlRepository: UrlRepository) => {
+        return new GetUrlsByUserUseCase(urlRepository.findByUserId);
+    }
 };
 
 const deleteUrlUseCaseProvider = {
-  provide: DeleteUrlUseCase,
-  inject: [UrlRepository],
-  useFactory: (urlRepository: UrlRepository) => {
-    return new DeleteUrlUseCase(urlRepository.delete);
-  }
+    provide: DeleteUrlUseCase,
+    inject: [UrlRepository],
+    useFactory: (urlRepository: UrlRepository) => {
+        return new DeleteUrlUseCase(urlRepository.delete);
+    }
 };
 
 const updateSlugUseCaseProvider = {
-  provide: UpdateSlugUseCase,
-  inject: [UrlRepository],
-  useFactory: (urlRepository: UrlRepository) => {
-    return new UpdateSlugUseCase(urlRepository.findById, urlRepository.findBySlug, urlRepository.update);
-  }
+    provide: UpdateSlugUseCase,
+    inject: [UrlRepository],
+    useFactory: (urlRepository: UrlRepository) => {
+        return new UpdateSlugUseCase(urlRepository.findById, urlRepository.findBySlug, urlRepository.update);
+    }
 };
 
 @Module({
-  imports: [PgModule],
-  controllers: [UrlController],
-  providers: [
-    UrlRepository,
-    shortenUrlUseCaseProvider,
-    getUrlBySlugUseCaseProvider,
-    getUrlsByUserUseCaseProvider,
-    deleteUrlUseCaseProvider,
-    updateSlugUseCaseProvider,
-  ],
+    imports: [
+        PgModule,
+    ],
+    controllers: [UrlController],
+    providers: [
+        UrlRepository,
+        shortenUrlUseCaseProvider,
+        getUrlBySlugUseCaseProvider,
+        getUrlsByUserUseCaseProvider,
+        deleteUrlUseCaseProvider,
+        updateSlugUseCaseProvider,
+    ],
 })
-export class UrlModule {}
+export class UrlModule { }
