@@ -38,6 +38,9 @@ importers:
       '@repo/api':
         specifier: workspace:*
         version: link:../../packages/api
+      neverthrow:
+        specifier: ^8.2.0
+        version: 8.2.0
       node-postgres:
         specifier: ^0.6.2
         version: 0.6.2
@@ -1971,6 +1974,14 @@ packages:
     dependencies:
       '@noble/hashes': 1.8.0
     dev: true
+
+  /@rollup/rollup-linux-x64-gnu@4.49.0:
+    resolution: {integrity: sha512-BR7+blScdLW1h/2hB/2oXM+dhTmpW3rQt1DeSiCP9mc2NMMkqVgjIN3DDsNpKmezffGC9R8XKVOLmBkRUcK/sA==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
 
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -5700,6 +5711,13 @@ packages:
   /neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
+
+  /neverthrow@8.2.0:
+    resolution: {integrity: sha512-kOCT/1MCPAxY5iUV3wytNFUMUolzuwd/VF/1KCx7kf6CutrOsTie+84zTGTpgQycjvfLdBBdvBvFLqFD2c0wkQ==}
+    engines: {node: '>=18'}
+    optionalDependencies:
+      '@rollup/rollup-linux-x64-gnu': 4.49.0
+    dev: false
 
   /next@15.4.6(@babel/core@7.26.10)(react-dom@19.1.1)(react@19.1.1):
     resolution: {integrity: sha512-us++E/Q80/8+UekzB3SAGs71AlLDsadpFMXVNM/uQ0BMwsh9m3mr0UNQIfjKed8vpWXsASe+Qifrnu1oLIcKEQ==}

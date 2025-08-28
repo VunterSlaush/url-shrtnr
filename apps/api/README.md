@@ -8,10 +8,13 @@ A RESTful API built with NestJS and TypeScript that provides URL shortening serv
 - [x] **PostgreSQL Integration**: Robust database operations with node-postgres
 
 ### Core API Endpoints
-- [ ] **URL Management**: Create, retrieve, update, and delete shortened URLs
+- [x] **URL Management**: Create, retrieve, update, and delete shortened URLs
 - [ ] **URL Redirection**: Handle redirection from short URLs to original destinations
-- [ ] **Custom Slugs**: Support for user-defined custom URL slugs
-- [ ] **URL Validation**: Server-side validation of submitted URLs
+- [x] **Custom Slugs**: Support for user-defined custom URL slugs
+- [x] **URL Validation**: Server-side validation of submitted URLs
+- [ ] **Robust Slug Generation**: Automatic generation of unique, URL-safe slugs with collision detection
+- [ ] **API Tests**: Comprehensive unit and integration tests for all endpoints
+
 
 ### Authentication & Authorization
 - [ ] **JWT Authentication**: Secure token-based authentication system
