@@ -5,7 +5,10 @@ export const nestConfig = {
   ...baseConfig,
   rootDir: '.',
   testRegex: '.*\\.spec\\.ts$',
-  coveragePathIgnorePatterns: ['./test/'],
+  coveragePathIgnorePatterns: [
+    './test/',
+    './api/coverage',
+  ],
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },

@@ -11,11 +11,12 @@ type Cause = Error | string | unknown;
 export class AppError extends Error {
     constructor(
         public readonly type: AppErrorType,
-        message: string,
-        cause?: Cause
+        public readonly message: string,
+        public readonly cause?: Cause
     ) {
         super(message, cause);
         this.name = `AppError[${this.type}]`;
+        this.cause = cause;
     }
 
     static notFound(message: string, cause?: Cause): AppError {
