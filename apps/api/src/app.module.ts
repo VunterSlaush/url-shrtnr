@@ -1,13 +1,17 @@
 import { Module } from '@nestjs/common';
-
-
-
-import { AppService } from './app.service';
 import { AppController } from './app.controller';
+import { ConfigModule } from '@nestjs/config';
+import { PgModule } from './postgres/pg.module';
 
 @Module({
-  imports: [],
+  imports: [
+    ConfigModule.forRoot({
+      cache: true,
+      isGlobal: true,
+    }),
+    PgModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}

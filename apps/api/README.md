@@ -5,7 +5,7 @@ A RESTful API built with NestJS and TypeScript that provides URL shortening serv
 ## Features
 
 ### Data Management
-- [ ] **PostgreSQL Integration**: Robust database operations with node-postgres
+- [x] **PostgreSQL Integration**: Robust database operations with node-postgres
 
 ### Core API Endpoints
 - [ ] **URL Management**: Create, retrieve, update, and delete shortened URLs
