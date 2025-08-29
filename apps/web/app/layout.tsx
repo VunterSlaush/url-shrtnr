@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleButton } from "./components/googleButton";
-import Image from "next/image";
+
 import { getUser, isLoggedIn } from "./user";
 import { UserMenu } from "@repo/ui";
 import { logout } from "./actions";

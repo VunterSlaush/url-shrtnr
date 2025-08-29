@@ -155,7 +155,7 @@ describe('DeleteUrlUseCase', () => {
         });
 
         it('should handle false return value correctly', async () => {
-            const mockDeleteUrl: DeleteUrl = async (id, userId) => ok(false);
+            const mockDeleteUrl: DeleteUrl = async () => ok(false);
             const deleteUrlUseCase = new DeleteUrlUseCase(mockDeleteUrl);
 
             const result = await deleteUrlUseCase.execute('url-123', 'user-123');
@@ -168,7 +168,7 @@ describe('DeleteUrlUseCase', () => {
 
         it('should handle large number of deletions correctly', async () => {
             let deleteUrlCallCount = 0;
-            const mockDeleteUrl: DeleteUrl = async (id, userId) => {
+            const mockDeleteUrl: DeleteUrl = async () => {
                 deleteUrlCallCount++;
                 return ok(true);
             };
@@ -190,7 +190,7 @@ describe('DeleteUrlUseCase', () => {
 
         it('should handle concurrent deletion requests', async () => {
             let deleteUrlCallCount = 0;
-            const mockDeleteUrl: DeleteUrl = async (id, userId) => {
+            const mockDeleteUrl: DeleteUrl = async () => {
                 deleteUrlCallCount++;
                 return ok(true);
             };
@@ -219,7 +219,7 @@ describe('DeleteUrlUseCase', () => {
 
         it('should handle deletion of already deleted URL', async () => {
             let deleteUrlCallCount = 0;
-            const mockDeleteUrl: DeleteUrl = async (id, userId) => {
+            const mockDeleteUrl: DeleteUrl = async () => {
                 deleteUrlCallCount++;
                 return ok(true);
             };
@@ -239,7 +239,7 @@ describe('DeleteUrlUseCase', () => {
 
         it('should handle deletion with different ID formats', async () => {
             let deleteUrlCallCount = 0;
-            const mockDeleteUrl: DeleteUrl = async (id, userId) => {
+            const mockDeleteUrl: DeleteUrl = async () => {
                 deleteUrlCallCount++;
                 return ok(true);
             };

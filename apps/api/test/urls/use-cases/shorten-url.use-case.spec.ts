@@ -6,7 +6,7 @@ import { fail } from 'assert';
 import { AppError } from '@repo/api/error';
 import { CreateUrl, FindUrlBySlug } from '../../../src/urls/url.interfaces';
 import { createMockUrl } from './common';
-import { CreateUrlSuccess, NotFoundBySlug } from './common-mocks';
+import { CreateUrlSuccess, NotFoundBySlug, GetRandomNumber } from './common-mocks';
 
 
 describe('ShortenUrlUseCase', () => {
@@ -14,7 +14,7 @@ describe('ShortenUrlUseCase', () => {
     describe('execute', () => {
         describe('URL validation', () => {
 
-            const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, NotFoundBySlug);
+            const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, NotFoundBySlug, GetRandomNumber);
 
             const urlValidationTestCases = [
                 {
@@ -126,7 +126,7 @@ describe('ShortenUrlUseCase', () => {
             it('should return error when slug already exists', async () => {
                 const existingSlug = 'existing-slug';
                 const mockFindUrlBySlug: FindUrlBySlug = async () => ok(createMockUrl({ slug: existingSlug }));
-                const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, mockFindUrlBySlug);
+                const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, mockFindUrlBySlug, GetRandomNumber);
 
                 const input: CreateUrlDto = { url: 'https://example.com', slug: existingSlug };
                 const result = await shortenUrlUseCase.execute(input);
@@ -140,7 +140,7 @@ describe('ShortenUrlUseCase', () => {
             it('should return error when finding slug fails', async () => {
                 const existingSlug = 'existing-slug';
                 const mockFindUrlBySlug: FindUrlBySlug = async () => err(AppError.unhandled('Database error'));
-                const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, mockFindUrlBySlug);
+                const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, mockFindUrlBySlug, GetRandomNumber);
 
                 const input: CreateUrlDto = { url: 'https://example.com', slug: existingSlug };
                 const result = await shortenUrlUseCase.execute(input);
@@ -153,7 +153,7 @@ describe('ShortenUrlUseCase', () => {
 
             it('should use provided slug when valid', async () => {
                 const input: CreateUrlDto = { url: 'https://example.com', slug: 'custom-slug' };
-                const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, NotFoundBySlug);
+                const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, NotFoundBySlug, GetRandomNumber);
                 const result = await shortenUrlUseCase.execute(input);
 
                 expect(result.isOk()).toBe(true);
@@ -161,12 +161,12 @@ describe('ShortenUrlUseCase', () => {
 
             it('should generate slug when not provided', async () => {
                 const input: CreateUrlDto = { url: 'https://example.com' };
-                const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, NotFoundBySlug);
+                const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, NotFoundBySlug, GetRandomNumber);
                 const result = await shortenUrlUseCase.execute(input);
 
                 expect(result.isOk()).toBe(true);
                 if (result.isOk()) {
-                    expect(result.value.slug).toHaveLength(8);
+                    expect(result.value.slug).toMatch(/^[a-zA-Z0-9]+$/);
                 } else {
                     fail(new Error('Expected successful result'));
                 }
@@ -176,7 +176,7 @@ describe('ShortenUrlUseCase', () => {
         describe('URL creation', () => {
             it('should successfully create URL when all validations pass', async () => {
                 const input: CreateUrlDto = { url: 'https://example.com', slug: 'test-slug' };
-                const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, NotFoundBySlug);
+                const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, NotFoundBySlug, GetRandomNumber);
                 const result = await shortenUrlUseCase.execute(input);
 
 
@@ -190,7 +190,7 @@ describe('ShortenUrlUseCase', () => {
 
             it('should return error when createUrl fails', async () => {
                 const mockCreateUrl: CreateUrl = async () => err(AppError.unhandled('Database error'));
-                const shortenUrlUseCase = new ShortenUrlUseCase(mockCreateUrl, NotFoundBySlug);
+                const shortenUrlUseCase = new ShortenUrlUseCase(mockCreateUrl, NotFoundBySlug, GetRandomNumber);
 
                 const input: CreateUrlDto = { url: 'https://example.com', slug: 'test-slug' };
                 const result = await shortenUrlUseCase.execute(input);
@@ -217,7 +217,7 @@ describe('ShortenUrlUseCase', () => {
                         userId
                     }));
                 };
-                const shortenUrlUseCase = new ShortenUrlUseCase(mockCreateUrl, NotFoundBySlug);
+                const shortenUrlUseCase = new ShortenUrlUseCase(mockCreateUrl, NotFoundBySlug, GetRandomNumber);
 
 
                 const input: CreateUrlDto = { url: 'https://example.com', slug: 'test-slug' };
@@ -227,7 +227,7 @@ describe('ShortenUrlUseCase', () => {
             });
 
             it('should handle undefined userId', async () => {
-                const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, NotFoundBySlug);
+                const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, NotFoundBySlug, GetRandomNumber);
 
                 const input: CreateUrlDto = { url: 'https://example.com', slug: 'test-slug' };
                 const result = await shortenUrlUseCase.execute(input);
@@ -243,7 +243,7 @@ describe('ShortenUrlUseCase', () => {
         it('on find by slug throw unhandled error, should return unhandled error', async () => {
             const mockFindUrlBySlug: FindUrlBySlug = async () => { throw new Error('Database error') };
 
-            const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, mockFindUrlBySlug);
+            const shortenUrlUseCase = new ShortenUrlUseCase(CreateUrlSuccess, mockFindUrlBySlug, GetRandomNumber);
 
             const input: CreateUrlDto = { url: 'https://example.com', slug: 'test-slug' };
             const result = await shortenUrlUseCase.execute(input);
@@ -256,7 +256,7 @@ describe('ShortenUrlUseCase', () => {
 
         it('on createUrl throw unhandled error, should return unhandled error', async () => {
             const mockCreateUrl: CreateUrl = async () => { throw new Error('Creating URL failed') };
-            const shortenUrlUseCase = new ShortenUrlUseCase(mockCreateUrl, NotFoundBySlug);
+            const shortenUrlUseCase = new ShortenUrlUseCase(mockCreateUrl, NotFoundBySlug, GetRandomNumber);
 
             const input: CreateUrlDto = { url: 'https://example.com', slug: 'test-slug' };
             const result = await shortenUrlUseCase.execute(input);

@@ -3,7 +3,6 @@ import { Pool } from 'pg';
 import { UrlTrackingRepository } from '../../src/url-tracking/url-tracking.repository';
 import { CreateUrlTrackingDto } from '@repo/api/url-tracking/create-tracking.dto';
 import { AppError } from '@repo/api/error';
-import { UrlTracking } from '@repo/api/url-tracking/url-tracking';
 
 describe('UrlTrackingRepository - create', () => {
     let urlTrackingRepository: UrlTrackingRepository;

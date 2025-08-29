@@ -54,7 +54,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     return {
       id: profile.id,
       providerId: profile.id,
-      avatarUrl: this.resizeProfileImage(profile.photos[0].value),
+      avatarUrl: this.resizeProfileImage(profile.photos[0].value as string),
       name: profile.displayName ||
         [profile.name.givenName, profile.name.familyName]
           .map(s => (s || '').trim())

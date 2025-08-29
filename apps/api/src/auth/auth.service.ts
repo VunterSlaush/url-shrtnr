@@ -43,7 +43,7 @@ export class AuthService {
         const decoded = this.jwtService.decode(token, { complete: true });
         if (!decoded) return undefined;
 
-        const secret = this.createRefreshTokenSecret(decoded.payload.jti);
+        const secret = this.createRefreshTokenSecret(decoded.payload.jti as string);
 
         return this.jwtService.verify(token, { secret });
     }
@@ -52,7 +52,7 @@ export class AuthService {
         const decoded = this.jwtService.decode(token, { complete: true });
         if (!decoded) return undefined;
 
-        const secret = this.createAccessTokenSecret(decoded.payload.sub);
+        const secret = this.createAccessTokenSecret(decoded.payload.sub as string);
 
         return this.jwtService.verify(token, { secret });
     }

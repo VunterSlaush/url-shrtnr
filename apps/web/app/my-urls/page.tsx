@@ -33,7 +33,7 @@ export default async function Page() {
 
                 {urls.length === 0 ? (
                     <div className="flex flex-col items-center space-y-4">
-                        <p className="text-white text-lg">You haven't created any URLs yet :(</p>
+                        <p className="text-white text-lg">You haven&apos;t created any URLs yet :(</p>
                         <Link
                             href="/"
                             className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"

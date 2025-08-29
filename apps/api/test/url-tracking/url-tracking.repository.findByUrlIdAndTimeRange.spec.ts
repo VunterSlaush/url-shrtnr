@@ -73,7 +73,7 @@ describe('UrlTrackingRepository - findByUrlIdAndTimeRange', () => {
             expect(mockPool.query).toHaveBeenCalledTimes(1);
             expect(mockPool.query).toHaveBeenCalledWith(
                 expect.stringContaining('SELECT * FROM url_trackings'),
-                [urlId, timeRange.from, timeRange.to]
+                [urlId, timeRange.from.toISOString(), timeRange.to.toISOString()]
             );
         });
 
@@ -160,7 +160,7 @@ describe('UrlTrackingRepository - findByUrlIdAndTimeRange', () => {
             }
             expect(mockPool.query).toHaveBeenCalledWith(
                 expect.stringContaining('SELECT * FROM url_trackings'),
-                [urlId, differentTimeRange.from, differentTimeRange.to]
+                [urlId, differentTimeRange.from.toISOString(), differentTimeRange.to.toISOString()]
             );
         });
 

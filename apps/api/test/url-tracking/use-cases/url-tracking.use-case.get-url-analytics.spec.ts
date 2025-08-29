@@ -119,7 +119,7 @@ describe('GetUrlAnalyticsUseCase', () => {
 
         it('should return error when URL ID is null', async () => {
             // Arrange
-            const nullUrlId = null as any;
+            const nullUrlId = null as string | null;
             let calls = 0;
 
             const mockFindUrlTrackingsByUrlIdAndTimeRange: FindUrlTrackingsByUrlIdAndTimeRange = async () => {

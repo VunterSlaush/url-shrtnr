@@ -19,7 +19,8 @@ import {
   FindUrlBySlug,
   FindUrlsByUserId,
   UpdateUrl,
-  DeleteUrl
+  DeleteUrl,
+  GetNextSlugSequenceValue
 } from './url.interfaces';
 
 @Injectable()
@@ -110,4 +111,14 @@ export class UrlRepository {
       return err(AppError.unhandled('Failed to delete URL', error));
     }
   };
+
+  getNextSlugSequenceValue: GetNextSlugSequenceValue = async (): Promise<Result<number, AppError>> => {
+    try {
+      const result = await this.pool.query('SELECT nextval(\'slug_sequence\') as next_value');
+      const nextValue = parseInt(result.rows[0].next_value as string, 10);
+      return ok(nextValue);
+    } catch (error) {
+      return err(AppError.unhandled('Failed to get next slug sequence value', error as Error));
+    }
+  }
 }

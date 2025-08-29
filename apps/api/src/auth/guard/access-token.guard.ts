@@ -93,13 +93,13 @@ export class AccessTokenGuard extends AuthGuard('accessToken') implements CanAct
         const accessToken = request.cookies.access_token ?? '';
 
         // Verify both tokens
-        const decodedRefreshToken = this.authService.verifyRefreshToken(refreshToken.replace('Bearer ', ''));
-        const decodedAccessToken = this.authService.verifyAccessToken(accessToken.replace('Bearer ', ''));
+        const decodedRefreshToken = this.authService.verifyRefreshToken(refreshToken.replace('Bearer ', '') as string);
+        const decodedAccessToken = this.authService.verifyAccessToken(accessToken.replace('Bearer ', '') as string);
 
         // If refresh token is valid but access token is not, attempt refresh
         if (decodedRefreshToken && !decodedAccessToken) {
             const result = await this.authenticateWithRefreshTokenUseCase.execute(
-                decodedRefreshToken.sub
+                decodedRefreshToken.sub as string
             );
 
             if (result.isOk()) {

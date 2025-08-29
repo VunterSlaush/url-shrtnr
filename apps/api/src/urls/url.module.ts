@@ -13,7 +13,7 @@ const shortenUrlUseCaseProvider = {
     provide: ShortenUrlUseCase,
     inject: [UrlRepository],
     useFactory: (urlRepository: UrlRepository) => {
-        return new ShortenUrlUseCase(urlRepository.create, urlRepository.findBySlug);
+        return new ShortenUrlUseCase(urlRepository.create, urlRepository.findBySlug, urlRepository.getNextSlugSequenceValue);
     }
 };
 

@@ -35,7 +35,7 @@ export class AccessTokenStrategy extends PassportStrategy(
             secretOrKeyProvider: (_, jwtToken, done) => {
 
                 const decodedToken = jwtService.decode<AccessTokenPayload | null>(
-                    jwtToken,
+                    jwtToken as string,
                 );
 
                 if (!decodedToken) {

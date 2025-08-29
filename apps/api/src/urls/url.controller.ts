@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Param, Body, HttpException, HttpStatus, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body, HttpException, Patch } from '@nestjs/common';
 import { CreateUrlDto } from '@repo/api/urls/create-url.dto';
 import { UpdateSlugDto } from '@repo/api/urls/update-slug.dto';
 import { Url } from '@repo/api/urls/url';
@@ -11,6 +11,7 @@ import { AuthUser } from 'src/auth/auth-user.decorator';
 import { User } from '@repo/api/users/user';
 import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from '../public.decorator';
+import { mapAppErrorToHttpErrorInfo } from '@repo/api/error';
 
 @ApiTags('URLs')
 @Controller('urls')
@@ -35,7 +36,8 @@ export class UrlController {
         const result = await this.shortenUrlUseCase.execute(createUrlDto, authUser?.id);
 
         if (result.isErr()) {
-            throw new HttpException(result.error.message, HttpStatus.BAD_REQUEST); // TODO: Add Typification
+            const errorInfo = mapAppErrorToHttpErrorInfo(result.error);
+            throw new HttpException(errorInfo.message, errorInfo.statusCode);
         }
 
         return result.value;
@@ -51,7 +53,8 @@ export class UrlController {
         const result = await this.getUrlBySlugUseCase.execute(slug);
 
         if (result.isErr()) {
-            throw new HttpException(result.error.message, HttpStatus.NOT_FOUND); //TODO: Add typification
+            const errorInfo = mapAppErrorToHttpErrorInfo(result.error);
+            throw new HttpException(errorInfo.message, errorInfo.statusCode);
         }
 
         return result.value;
@@ -67,7 +70,8 @@ export class UrlController {
         const result = await this.getUrlsByUserUseCase.execute(authUser?.id);
 
         if (result.isErr()) {
-            throw new HttpException(result.error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            const errorInfo = mapAppErrorToHttpErrorInfo(result.error);
+            throw new HttpException(errorInfo.message, errorInfo.statusCode);
         }
 
         return result.value;
@@ -87,7 +91,8 @@ export class UrlController {
         const result = await this.deleteUrlUseCase.execute(id, authUser.id);
 
         if (result.isErr()) {
-            throw new HttpException(result.error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            const errorInfo = mapAppErrorToHttpErrorInfo(result.error);
+            throw new HttpException(errorInfo.message, errorInfo.statusCode);
         }
 
         return { success: result.value };
@@ -106,7 +111,8 @@ export class UrlController {
         const result = await this.updateSlugUseCase.execute(id, body.slug, authUser.id);
 
         if (result.isErr()) {
-            throw new HttpException(result.error.message, HttpStatus.BAD_REQUEST);
+            const errorInfo = mapAppErrorToHttpErrorInfo(result.error);
+            throw new HttpException(errorInfo.message, errorInfo.statusCode);
         }
 
         return result.value;

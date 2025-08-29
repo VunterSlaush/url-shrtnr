@@ -62,17 +62,17 @@ export class HttpError extends Error {
     }
 }
 
-export function mapAppErrorToHttpError(appError: AppError): HttpError {
+export function mapAppErrorToHttpErrorInfo(appError: AppError): { statusCode: number, message: string } {
     switch (appError.type) {
         case AppErrorType.NOT_FOUND:
-            return new HttpError(404, appError.message);
+            return { statusCode: 404, message: appError.message };
         case AppErrorType.CONFLICT:
-            return new HttpError(409, appError.message);
+            return { statusCode: 409, message: appError.message };
         case AppErrorType.VALIDATION:
-            return new HttpError(400, appError.message);
+            return { statusCode: 400, message: appError.message };
         case AppErrorType.UNHANDLED:
-            return new HttpError(500, appError.message);
+            return { statusCode: 500, message: appError.message };
         default:
-            return new HttpError(500, appError.message);
+            return { statusCode: 500, message: appError.message };
     }
 }

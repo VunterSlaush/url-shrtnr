@@ -13,8 +13,6 @@ import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { GoogleAuthGuard } from './guard/google-auth.guard';
 import { AccessTokenGuard } from './guard/access-token.guard';
-import { User } from '@repo/api/users/user';
-import { AuthUser } from './auth-user.decorator';
 import { COOKIE_CONFIG, setAuthCookies } from './auth.cookies';
 import { RefreshTokenGuard } from './guard/refresh-token.guard';
 import { AuthResponseDto } from './auth.types';
@@ -50,7 +48,7 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     setAuthCookies(res, req.user);
-    res.redirect(process.env.APP_URL!);
+    res.redirect(process.env.APP_URL! as string);
   }
 
   @UseGuards(RefreshTokenGuard)
@@ -70,7 +68,6 @@ export class AuthController {
   async signout(
     @Req() _req: Request & { user: AuthResponseDto },
     @Res({ passthrough: true }) res: Response,
-    @AuthUser() authUser: User,
   ): Promise<HttpStatus> {
 
     const IS_DEV = this.configService.get<boolean>('IS_DEV');

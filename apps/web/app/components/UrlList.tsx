@@ -9,7 +9,7 @@ interface UrlListProps {
     initialUrls: Url[];
 }
 
-export const UrlList: React.FC<UrlListProps> = ({ initialUrls }) => {
+export const UrlList = ({ initialUrls }: UrlListProps) => {
     const [urls, setUrls] = useState<Url[]>(initialUrls);
 
     const onDelete = async (url: Url) => {
@@ -29,7 +29,7 @@ export const UrlList: React.FC<UrlListProps> = ({ initialUrls }) => {
         }
     }
 
-    const currentDomain = window.location.origin;
+    const currentDomain = typeof window !== 'undefined' ? window.location.origin : '';
 
     return (
         <div className="flex flex-col items-center space-y-4 min-w-1/2">

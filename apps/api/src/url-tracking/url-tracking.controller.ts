@@ -1,13 +1,14 @@
-import { Controller, Post, Get, Param, Req, Query } from '@nestjs/common';
+import { Controller, Post, Get, Param, Req, Query, HttpException } from '@nestjs/common';
 import { TrackUrlUseCase } from './use-cases/track-url.use-case';
 import { GetUrlAnalyticsUseCase } from './use-cases/get-url-analytics.use-case';
 import { Request } from 'express';
-import { AuthUser } from 'src/auth/auth-user.decorator';
+import { AuthUser } from '../auth/auth-user.decorator';
 import { User } from '@repo/api/users/user';
 import { IncomingHttpHeaders } from 'http';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { UrlTracking } from '@repo/api/url-tracking/url-tracking';
 import { Public } from '../public.decorator';
+import { mapAppErrorToHttpErrorInfo } from '@repo/api/error';
 
 
 @Controller('urls/trackings')
@@ -29,8 +30,8 @@ export class UrlTrackingController {
         setImmediate(async () => {
             try {
                 await this.trackUrlUseCase.execute(urlId, headers);
-            } catch (error) {
-                console.error('Background URL tracking failed:', error);
+            } catch {
+                // ignore error
             }
         });
 
@@ -73,7 +74,8 @@ export class UrlTrackingController {
 
 
         if (result.isErr()) {
-            throw result.error;
+            const errorInfo = mapAppErrorToHttpErrorInfo(result.error);
+            throw new HttpException(errorInfo.message, errorInfo.statusCode);
         }
 
         return {
