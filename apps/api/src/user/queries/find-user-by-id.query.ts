@@ -8,10 +8,10 @@
  * @returns Object containing the parameterized SQL query and values array
  */
 export const findUserByIdQuery = (id: string): { query: string; values: string[] } => ({
-    query: `
+  query: `
     SELECT id, email, name, provider_id, avatar_url, created_at, updated_at
     FROM users
-    WHERE id = $1 AND deleted_at IS NULL
+    WHERE id = $1
   `,
-    values: [id]
+  values: [id]
 });

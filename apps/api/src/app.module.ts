@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { UrlTrackingModule } from './url-tracking/url-tracking.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { AccessTokenGuard } from './auth/guard/access-token.guard';
 
 
 @Module({
@@ -35,6 +36,10 @@ import { APP_GUARD } from '@nestjs/core';
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AccessTokenGuard,
     },
   ],
 })

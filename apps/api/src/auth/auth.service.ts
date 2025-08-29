@@ -87,6 +87,17 @@ export class AuthService {
     }
 
     private async createAccessToken(user: User): Promise<AuthToken> {
+
+        // The `sub` trait in the token represents the user id.
+        const payload: Omit<User, 'id'> = {
+            email: user.email,
+            name: user.name,
+            providerId: user.providerId,
+            avatarUrl: user.avatarUrl,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+        };
+
         const secret = this.createAccessTokenSecret(user.id);
 
         const jwtSignOptions = this.createJwtSignOptions(user, {
@@ -96,7 +107,7 @@ export class AuthService {
         });
 
         return {
-            token: 'Bearer ' + this.jwtService.sign(user, jwtSignOptions),
+            token: 'Bearer ' + this.jwtService.sign(payload, jwtSignOptions),
             expiresInSeconds: jwtSignOptions.expiresIn as number,
         };
     }

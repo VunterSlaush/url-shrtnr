@@ -64,6 +64,6 @@ const authenticateWithRefreshTokenUseCaseProvider = {
         authenticateWithRefreshTokenUseCaseProvider,
     ],
     controllers: [AuthController],
-    exports: [AuthService],
+    exports: [AuthService, authenticateWithRefreshTokenUseCaseProvider],
 })
 export class AuthModule { }

@@ -10,6 +10,8 @@ export const REFRESH_TOKEN_DURATION = 30 * 24 * 60 * 60 * 1000; // 1 month in mi
 export enum COOKIE {
     AccessToken = 'access_token',
     RefreshToken = 'refresh_token',
+    UserName = 'user_name',
+    UserAvatar = 'user_avatar',
 }
 
 export const DEFAULT_COOKIE_OPTIONS: CookieOptions = {
@@ -31,6 +33,12 @@ export const COOKIE_CONFIG: Record<COOKIE, CookieOptions> = {
         ...DEFAULT_COOKIE_OPTIONS,
         maxAge: REFRESH_TOKEN_DURATION,
     },
+    [COOKIE.UserName]: {
+        ...DEFAULT_COOKIE_OPTIONS,
+    },
+    [COOKIE.UserAvatar]: {
+        ...DEFAULT_COOKIE_OPTIONS,
+    },
 };
 
 
@@ -45,6 +53,18 @@ export function setAuthCookies(res: Response, authUser: AuthResponseDto) {
 
     res.cookie(COOKIE.AccessToken, authUser.accessToken.token, {
         ...COOKIE_CONFIG[COOKIE.AccessToken],
+        domain,
+        secure,
+    });
+
+    res.cookie(COOKIE.UserName, authUser.user.name, {
+        ...COOKIE_CONFIG[COOKIE.UserName],
+        domain,
+        secure,
+    });
+
+    res.cookie(COOKIE.UserAvatar, authUser.user.avatarUrl, {
+        ...COOKIE_CONFIG[COOKIE.UserAvatar],
         domain,
         secure,
     });

@@ -23,13 +23,16 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     super({
       clientID: configService.getOrThrow('GOOGLE_CLIENT_ID'),
       clientSecret: configService.getOrThrow('GOOGLE_CLIENT_SECRET'),
-      callbackURL: `${configService.getOrThrow('DOMAIN_NAME')}/auth/oauth/google`,
+      callbackURL: `http://localhost:3021/auth/oauth/google/callback`,
       scope: ['email', 'profile'],
       passReqToCallback: true,
     });
   }
 
   async validate(
+    request: Request,
+    accessToken: string,
+    refreshToken: string,
     profile: Profile,
     done: VerifiedCallback,
   ): Promise<void> {

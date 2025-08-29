@@ -18,10 +18,13 @@ import { AuthUser } from './auth-user.decorator';
 import { COOKIE_CONFIG, setAuthCookies } from './auth.cookies';
 import { RefreshTokenGuard } from './guard/refresh-token.guard';
 import { AuthResponseDto } from './auth.types';
+import { Public } from 'src/public.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
 
 
 @Controller("auth")
+@ApiTags('Auth')
 export class AuthController {
   constructor(
     private readonly configService: ConfigService,
@@ -34,21 +37,21 @@ export class AuthController {
 
   @Get("oauth/google")
   @UseGuards(GoogleAuthGuard)
+  @Public()
   googleAuth(): HttpStatus {
     return HttpStatus.OK;
   }
 
   @Get("oauth/google/callback")
   @UseGuards(GoogleAuthGuard)
-
+  @Public()
   async googleAuthCallback(
     @Req() req: Request & { user: AuthResponseDto },
     @Res({ passthrough: true }) res: Response,
   ) {
     setAuthCookies(res, req.user);
-
+    res.redirect(process.env.APP_URL!);
   }
-
 
   @UseGuards(RefreshTokenGuard)
   @Post("refresh")
@@ -88,7 +91,6 @@ export class AuthController {
     return HttpStatus.OK;
 
   }
-
 
 
 }

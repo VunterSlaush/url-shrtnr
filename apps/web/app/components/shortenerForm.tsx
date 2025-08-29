@@ -52,6 +52,7 @@ export const ShortenerForm: React.FC<Props> = ({ className }) => {
             const result = await createUrl({
                 body,
                 baseUrl: process.env.NEXT_PUBLIC_API_URL,
+                credentials: "include",
             });
 
             if (result.data) {

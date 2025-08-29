@@ -1,14 +1,14 @@
+import { GoogleLogin } from "@react-oauth/google";
 import { ShortenerForm } from "./components/shortenerForm";
 import { Window } from "@repo/ui/window";
 import Image from "next/image";
 
 
+
 export default function Page() {
+
   return (
     <main className="flex flex-col items-center justify-between min-h-screen relative">
-      <button className="absolute top-8 right-8 bg-white text-black px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-        Log In
-      </button>
       <div className="flex flex-col items-center justify-center mt-24">
         <h1 className="text-6xl font-bold text-center text-white">SHRTNR!</h1>
         <p className="text-lg text-center text-white max-w-xl mt-2">

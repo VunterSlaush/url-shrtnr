@@ -2,10 +2,11 @@ import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from '@repo/api/users/user';
 import { GetUserProfileUseCase } from './use-cases/get-user-profile.use-case';
 import { AuthUser } from 'src/auth/auth-user.decorator';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserDto } from '@repo/api/users/user.dto';
 
 @Controller('users')
+@ApiTags('Users')
 export class UserController {
     constructor(
         private readonly getUserProfileUseCase: GetUserProfileUseCase,

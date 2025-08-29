@@ -17,10 +17,10 @@ A RESTful API built with NestJS and TypeScript that provides URL shortening serv
 
 
 ### Authentication & Authorization
-- [ ] **JWT Authentication**: Secure token-based authentication system
-- [ ] **User Registration**: Account creation with OAuth GMail
-- [ ] **Protected Routes**: Secure endpoints requiring authentication
-- [ ] **User Session Management**: Handle login/logout and token refresh
+- [x] **JWT Authentication**: Secure token-based authentication system
+- [x] **User Registration**: Account creation with OAuth GMail
+- [x] **Protected Routes**: Secure endpoints requiring authentication
+- [x] **User Session Management**: Handle login/logout and token refresh
 
 ### Analytics & Tracking
 - [x] **Visit Analytics**: Track and store URL visit statistics

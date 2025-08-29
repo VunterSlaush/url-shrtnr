@@ -10,6 +10,7 @@ import { UpdateSlugUseCase } from './use-cases/update-slug.use-case';
 import { AuthUser } from 'src/auth/auth-user.decorator';
 import { User } from '@repo/api/users/user';
 import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { Public } from '../public.decorator';
 
 @ApiTags('URLs')
 @Controller('urls')
@@ -23,12 +24,14 @@ export class UrlController {
     ) { }
 
     @Post()
+    @Public()
     @ApiOkResponse({
         type: Url,
         description: 'The shortened URL',
     })
     @ApiBody({ type: CreateUrlDto, description: 'The URL to shorten' })
     async shortenUrl(@Body() createUrlDto: CreateUrlDto, @AuthUser() authUser?: User): Promise<Url> {
+        console.log("shortenUrl", createUrlDto, authUser);
         const result = await this.shortenUrlUseCase.execute(createUrlDto, authUser?.id);
 
         if (result.isErr()) {
@@ -39,6 +42,7 @@ export class UrlController {
     }
 
     @Get(':slug')
+    @Public()
     @ApiOkResponse({
         type: Url,
         description: 'The URL properties',

@@ -7,6 +7,7 @@ import { User } from '@repo/api/users/user';
 import { IncomingHttpHeaders } from 'http';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { UrlTracking } from '@repo/api/url-tracking/url-tracking';
+import { Public } from '../public.decorator';
 
 
 @Controller('urls/trackings')
@@ -21,11 +22,10 @@ export class UrlTrackingController {
         type: UrlTracking,
         description: 'The URL tracking was created',
     })
+    @Public()
     async trackUrl(@Param('urlId') urlId: string, @Req() req: Request) {
         const headers = this.parseHeaders(req.headers);
-        console.log('headers', headers);
 
-        // Queue the tracking operation to ensure it executes even if HTTP connection dies
         setImmediate(async () => {
             try {
                 await this.trackUrlUseCase.execute(urlId, headers);

@@ -1,7 +1,7 @@
 import { TimestampRange } from '../url-tracking.interfaces';
 
 export function findUrlTrackingsByUrlIdAndTimeRangeQuery(urlId: string, timeRange: TimestampRange) {
-    const query = `
+  const query = `
     SELECT * FROM url_trackings
     WHERE url_id = $1
     AND created_at >= $2
@@ -9,7 +9,11 @@ export function findUrlTrackingsByUrlIdAndTimeRangeQuery(urlId: string, timeRang
     ORDER BY created_at DESC
   `;
 
-    const values = [urlId, timeRange.from, timeRange.to];
+  const values = [
+    urlId,
+    timeRange.from.toISOString(),
+    timeRange.to.toISOString()
+  ];
 
-    return { query, values };
+  return { query, values };
 }

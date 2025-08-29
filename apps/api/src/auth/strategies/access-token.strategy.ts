@@ -33,6 +33,7 @@ export class AccessTokenStrategy extends PassportStrategy(
             ]),
             ignoreExpiration: false,
             secretOrKeyProvider: (_, jwtToken, done) => {
+
                 const decodedToken = jwtService.decode<AccessTokenPayload | null>(
                     jwtToken,
                 );
