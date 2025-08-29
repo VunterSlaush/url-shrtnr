@@ -7,6 +7,7 @@ import { Url } from './urls/url';
 import { AppError } from './error';
 import { CreateUrlTrackingDto } from './url-tracking/create-tracking.dto';
 import { UrlTracking } from 'url-tracking/url-tracking';
+import { URL_VALIDATION_REGEX } from './urls/constants';
 
 export const users = {
   UserDto,
@@ -17,6 +18,7 @@ export const urls = {
   UrlDto,
   CreateUrlDto,
   Url,
+  URL_VALIDATION_REGEX,
 };
 
 export const error = {

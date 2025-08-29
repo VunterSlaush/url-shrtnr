@@ -9,7 +9,7 @@ A RESTful API built with NestJS and TypeScript that provides URL shortening serv
 
 ### Core API Endpoints
 - [x] **URL Management**: Create, retrieve, update, and delete shortened URLs
-- [ ] **URL Redirection**: Handle redirection from short URLs to original destinations
+- [x] **URL Redirection**: Handle redirection from short URLs to original destinations
 - [x] **Custom Slugs**: Support for user-defined custom URL slugs
 - [x] **URL Validation**: Server-side validation of submitted URLs
 - [ ] **Robust Slug Generation**: Automatic generation of unique, URL-safe slugs with collision detection
@@ -23,9 +23,9 @@ A RESTful API built with NestJS and TypeScript that provides URL shortening serv
 - [ ] **User Session Management**: Handle login/logout and token refresh
 
 ### Analytics & Tracking
-- [ ] **Visit Analytics**: Track and store URL visit statistics
-- [ ] **Rate Limiting**: Implement intelligent rate limiting to prevent abuse
-- [ ] **Usage Metrics**: Collect data on URL usage patterns
+- [x] **Visit Analytics**: Track and store URL visit statistics
+- [x] **Rate Limiting**: Implement intelligent rate limiting to prevent abuse
+- [x] **Usage Metrics**: Collect data on URL usage patterns
 
 ## Technical Stack
 

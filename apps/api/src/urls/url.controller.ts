@@ -28,7 +28,7 @@ export class UrlController {
         description: 'The shortened URL',
     })
     @ApiBody({ type: CreateUrlDto, description: 'The URL to shorten' })
-    async createUrl(@Body() createUrlDto: CreateUrlDto, @AuthUser() authUser?: User): Promise<Url> {
+    async shortenUrl(@Body() createUrlDto: CreateUrlDto, @AuthUser() authUser?: User): Promise<Url> {
         const result = await this.shortenUrlUseCase.execute(createUrlDto, authUser?.id);
 
         if (result.isErr()) {

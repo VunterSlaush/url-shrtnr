@@ -12,7 +12,7 @@
     "build": "turbo run build",
     "build:web": "turbo run build --filter=web",
     "build:api": "turbo run build --filter=api",
-    "build:api-client": "npx @hey-api/openapi-ts -i ./apps/api/openapi.json -o packages/api-client",
+    "build:api-client": "npx @hey-api/openapi-ts -i ./apps/api/openapi.json -o packages/api-client/src",
     "test": "turbo run test",
     "test:web": "turbo run test --filter=web",
     "test:api": "turbo run test --filter=api",

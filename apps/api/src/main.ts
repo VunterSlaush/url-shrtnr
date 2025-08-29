@@ -16,6 +16,14 @@ async function bootstrap() {
     initializeSwagger(app);
   }
 
+  app.enableCors({
+    credentials: true,
+    origin: ['*'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    optionsSuccessStatus: 200,
+    maxAge: 3600,
+  });
+
   await app.listen(PORT);
 
   console.log(`Server is running on port ${PORT}`);

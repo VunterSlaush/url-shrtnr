@@ -6,6 +6,8 @@ import { UrlModule } from './urls/url.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { UrlTrackingModule } from './url-tracking/url-tracking.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 
 @Module({
@@ -14,6 +16,14 @@ import { UrlTrackingModule } from './url-tracking/url-tracking.module';
       cache: true,
       isGlobal: true,
     }),
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60000,
+          limit: 10,
+        },
+      ],
+    }),
     PgModule,
     UrlModule,
     AuthModule,
@@ -21,6 +31,11 @@ import { UrlTrackingModule } from './url-tracking/url-tracking.module';
     UrlTrackingModule,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule { }

@@ -1,10 +1,10 @@
+import { URL_VALIDATION_REGEX } from '@repo/api/urls/constants';
 import { Result, err } from 'neverthrow';
 import { CreateUrlDto } from '@repo/api/urls/create-url.dto';
 import { Url } from '@repo/api/urls/url';
 import { AppError, AppErrorType } from '@repo/api/error';
 import { CreateUrl, FindUrlBySlug } from '../url.interfaces';
 
-const URL_VALIDATION_REGEX = /^(https?:\/\/)?((([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))(:\d+)?(\/[^\s]*)?$/i;
 
 export class ShortenUrlUseCase {
     constructor(

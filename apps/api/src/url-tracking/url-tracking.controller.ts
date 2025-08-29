@@ -23,6 +23,7 @@ export class UrlTrackingController {
     })
     async trackUrl(@Param('urlId') urlId: string, @Req() req: Request) {
         const headers = this.parseHeaders(req.headers);
+        console.log('headers', headers);
 
         // Queue the tracking operation to ensure it executes even if HTTP connection dies
         setImmediate(async () => {
@@ -84,15 +85,14 @@ export class UrlTrackingController {
 
     parseHeaders(headers: IncomingHttpHeaders) {
         const result: Record<string, string> = {};
-        for (const [key, value] of Object.entries(headers)) {
-
+        Object.entries(headers).forEach(([key, value]) => {
             if (typeof value === 'string') {
                 result[key] = value;
             } else if (Array.isArray(value)) {
                 result[key] = value.join(', ');
             }
+        });
 
-            return result;
-        }
+        return result;
     }
 }

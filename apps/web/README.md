@@ -5,10 +5,10 @@ A modern React-based frontend application for the URL Shortener service. Built w
 ## Features
 
 ### Core User Interface
-- [ ] **URL Shortening Form**: Clean, intuitive interface for submitting URLs to shorten
-- [ ] **Custom Slug Input**: Allow users to specify custom URL slugs
-- [ ] **Copy to Clipboard**: One-click copying of generated short URLs
-- [ ] **URL Validation**: Real-time client-side URL validation with user feedback
+- [x] **URL Shortening Form**: Clean, intuitive interface for submitting URLs to shorten
+- [x] **Custom Slug Input**: Allow users to specify custom URL slugs
+- [x] **Copy to Clipboard**: One-click copying of generated short URLs
+- [x] **URL Validation**: Real-time client-side URL validation with user feedback
 
 ### User Dashboard
 - [ ] **Personal URL Management**: View and manage all user-created URLs
@@ -25,8 +25,8 @@ A modern React-based frontend application for the URL Shortener service. Built w
 - [ ] **Responsive Design**: Mobile-first design that works on all devices
 - [ ] **Error Handling**: User-friendly error messages and validation feedback
 - [ ] **Loading States**: Smooth loading indicators during API calls
-- [ ] **404 Page**: Custom not found page for invalid routes
-- [ ] **Toast Notifications**: Success and error notifications
+- [x] **404 Page**: Custom not found page for invalid routes
+- [x] **Toast Notifications**: Success and error notifications
 
 ## Technical Stack
 
