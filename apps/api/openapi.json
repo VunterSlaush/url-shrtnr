@@ -1,0 +1,520 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "getHealth",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    },
+    "/urls": {
+      "post": {
+        "operationId": "createUrl",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "The URL to shorten",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUrlDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The shortened URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Url"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "URLs"
+        ]
+      },
+      "get": {
+        "operationId": "getUrlsByUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The URLs from the logged in user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Url"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "URLs"
+        ]
+      }
+    },
+    "/urls/{slug}": {
+      "get": {
+        "operationId": "getUrlBySlug",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The URL properties",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Url"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "URLs"
+        ]
+      }
+    },
+    "/urls/{id}": {
+      "delete": {
+        "operationId": "deleteUrl",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The URL was deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "URLs"
+        ]
+      }
+    },
+    "/urls/{id}/slug": {
+      "patch": {
+        "operationId": "updateSlug",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSlugDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The URL properties updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Url"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "URLs"
+        ]
+      }
+    },
+    "/auth/oauth/google": {
+      "get": {
+        "operationId": "googleAuth",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/oauth/google/callback": {
+      "get": {
+        "operationId": "googleAuthCallback",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "operationId": "authenticateWithRefreshToken",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/signout": {
+      "post": {
+        "operationId": "signout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "operationId": "getUserProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The user profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/urls/trackings/{urlId}": {
+      "post": {
+        "operationId": "trackUrl",
+        "parameters": [
+          {
+            "name": "urlId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The URL tracking was created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UrlTracking"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "UrlTracking"
+        ]
+      },
+      "get": {
+        "operationId": "getUrlAnalytics",
+        "parameters": [
+          {
+            "name": "urlId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The URL tracking visits for the given time range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/UrlTracking"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "UrlTracking"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Shrtnr API",
+    "description": "The Shrtnr API",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "CreateUrlDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The URL to shorten",
+            "example": "https://www.google.com"
+          },
+          "slug": {
+            "type": "string",
+            "description": "The slug of the URL",
+            "example": "xHy48Ck"
+          }
+        },
+        "required": [
+          "url"
+        ]
+      },
+      "Url": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the URL",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "url": {
+            "type": "string",
+            "description": "The URL",
+            "example": "https://www.google.com"
+          },
+          "slug": {
+            "type": "string",
+            "description": "The slug of the URL",
+            "example": "xHy48Ck"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The date and time the URL was created",
+            "example": "2021-01-01T00:00:00.000Z"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The date and time the URL was updated",
+            "example": "2021-01-01T00:00:00.000Z"
+          },
+          "deletedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The date and time the URL was deleted",
+            "example": "2021-01-01T00:00:00.000Z"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The ID of the user who created the URL",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "required": [
+          "id",
+          "url",
+          "slug",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UpdateSlugDto": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "description": "The slug of the URL",
+            "example": "new-slug"
+          }
+        },
+        "required": [
+          "slug"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {}
+      },
+      "UrlTracking": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the URL tracking",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "urlId": {
+            "type": "string",
+            "description": "The ID of the URL",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "referrerDomain": {
+            "type": "string",
+            "description": "The referrer domain",
+            "example": "https://www.google.com"
+          },
+          "browser": {
+            "type": "string",
+            "description": "The browser",
+            "example": "Chrome"
+          },
+          "operatingSystem": {
+            "type": "string",
+            "description": "The operating system",
+            "example": "Windows"
+          },
+          "deviceType": {
+            "type": "string",
+            "description": "The device type",
+            "example": "desktop"
+          },
+          "language": {
+            "type": "string",
+            "description": "The language",
+            "example": "en"
+          },
+          "ipAddress": {
+            "type": "string",
+            "description": "The IP address",
+            "example": "127.0.0.1"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The date and time the URL tracking was created",
+            "example": "2021-01-01T00:00:00.000Z"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The date and time the URL tracking was created",
+            "example": "2021-01-01T00:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "urlId",
+          "referrerDomain",
+          "browser",
+          "operatingSystem",
+          "deviceType",
+          "language",
+          "ipAddress",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}

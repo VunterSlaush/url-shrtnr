@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Param, Body, HttpException, HttpStatus, Query, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body, HttpException, HttpStatus, Patch } from '@nestjs/common';
 import { CreateUrlDto } from '@repo/api/urls/create-url.dto';
 import { UpdateSlugDto } from '@repo/api/urls/update-slug.dto';
 import { Url } from '@repo/api/urls/url';
@@ -9,7 +9,9 @@ import { DeleteUrlUseCase } from './use-cases/delete-url.user-case';
 import { UpdateSlugUseCase } from './use-cases/update-slug.use-case';
 import { AuthUser } from 'src/auth/auth-user.decorator';
 import { User } from '@repo/api/users/user';
+import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('URLs')
 @Controller('urls')
 export class UrlController {
     constructor(
@@ -21,11 +23,15 @@ export class UrlController {
     ) { }
 
     @Post()
+    @ApiOkResponse({
+        type: Url,
+        description: 'The shortened URL',
+    })
+    @ApiBody({ type: CreateUrlDto, description: 'The URL to shorten' })
     async createUrl(@Body() createUrlDto: CreateUrlDto, @AuthUser() authUser?: User): Promise<Url> {
         const result = await this.shortenUrlUseCase.execute(createUrlDto, authUser?.id);
 
         if (result.isErr()) {
-            console.log(result.error);
             throw new HttpException(result.error.message, HttpStatus.BAD_REQUEST); // TODO: Add Typification
         }
 
@@ -33,6 +39,10 @@ export class UrlController {
     }
 
     @Get(':slug')
+    @ApiOkResponse({
+        type: Url,
+        description: 'The URL properties',
+    })
     async getUrlBySlug(@Param('slug') slug: string): Promise<Url> {
         const result = await this.getUrlBySlugUseCase.execute(slug);
 
@@ -45,6 +55,10 @@ export class UrlController {
 
 
     @Get()
+    @ApiOkResponse({
+        type: [Url],
+        description: 'The URLs from the logged in user',
+    })
     async getUrlsByUser(@AuthUser() authUser: User): Promise<Url[]> {
         const result = await this.getUrlsByUserUseCase.execute(authUser?.id);
 
@@ -56,6 +70,15 @@ export class UrlController {
     }
 
     @Delete(':id')
+    @ApiOkResponse({
+        schema: {
+            type: 'object',
+            properties: {
+                success: { type: 'boolean', example: true },
+            },
+        },
+        description: 'The URL was deleted',
+    })
     async deleteUrl(@Param('id') id: string, @AuthUser() authUser: User): Promise<{ success: boolean }> {
         const result = await this.deleteUrlUseCase.execute(id, authUser.id);
 
@@ -67,6 +90,10 @@ export class UrlController {
     }
 
     @Patch(':id/slug')
+    @ApiOkResponse({
+        type: Url,
+        description: 'The URL properties updated',
+    })
     async updateSlug(
         @Param('id') id: string,
         @Body() body: UpdateSlugDto,

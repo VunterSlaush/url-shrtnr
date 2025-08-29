@@ -1,5 +1,4 @@
 export class CreateUrlTrackingDto {
-
     urlId: string;
     referrerDomain?: string;
     browser?: string;

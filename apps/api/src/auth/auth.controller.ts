@@ -42,7 +42,7 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
 
   async googleAuthCallback(
-    @Req() req,
+    @Req() req: Request & { user: AuthResponseDto },
     @Res({ passthrough: true }) res: Response,
   ) {
     setAuthCookies(res, req.user);
@@ -65,7 +65,7 @@ export class AuthController {
   @Post("signout")
   @HttpCode(HttpStatus.OK)
   async signout(
-    @Req() _req,
+    @Req() _req: Request & { user: AuthResponseDto },
     @Res({ passthrough: true }) res: Response,
     @AuthUser() authUser: User,
   ): Promise<HttpStatus> {

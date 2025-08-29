@@ -5,6 +5,8 @@ import { Request } from 'express';
 import { AuthUser } from 'src/auth/auth-user.decorator';
 import { User } from '@repo/api/users/user';
 import { IncomingHttpHeaders } from 'http';
+import { ApiOkResponse } from '@nestjs/swagger';
+import { UrlTracking } from '@repo/api/url-tracking/url-tracking';
 
 
 @Controller('urls/trackings')
@@ -15,6 +17,10 @@ export class UrlTrackingController {
     ) { }
 
     @Post(':urlId')
+    @ApiOkResponse({
+        type: UrlTracking,
+        description: 'The URL tracking was created',
+    })
     async trackUrl(@Param('urlId') urlId: string, @Req() req: Request) {
         const headers = this.parseHeaders(req.headers);
 
@@ -33,20 +39,36 @@ export class UrlTrackingController {
     }
 
     @Get(':urlId')
+    @ApiOkResponse({
+        schema: {
+            type: 'object',
+            properties: {
+                success: {
+                    type: 'boolean',
+                    example: true,
+                },
+                data: {
+                    type: 'array',
+                    items: {
+                        $ref: '#/components/schemas/UrlTracking',
+                    },
+                },
+            },
+        },
+        description: 'The URL tracking visits for the given time range',
+    })
     async getUrlAnalytics(
         @Param('urlId') urlId: string,
         @AuthUser() authUser: User,
         @Query('from') from?: string,
         @Query('to') to?: string,
     ) {
-        let result;
-
 
         const timeRange = {
             from: new Date(from ?? Date.now() - 1000 * 60 * 60 * 24),
             to: new Date(to ?? Date.now())
         };
-        result = await this.getUrlAnalyticsUseCase.execute(urlId, timeRange);
+        const result = await this.getUrlAnalyticsUseCase.execute(urlId, timeRange);
 
 
         if (result.isErr()) {
