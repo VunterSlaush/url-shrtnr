@@ -28,7 +28,7 @@ export default async function Page() {
         const urls = await getUrls();
 
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen min-w-1/2">
+            <div className="flex flex-col items-center justify-center min-h-screen min-w-1/2 py-24 sm:py-14 md:py-12 px-4 md:px-8 lg:px-32 xl:px-64">
                 <h1 className="text-2xl font-bold text-white mb-8">My URLs</h1>
 
                 {urls.length === 0 ? (
