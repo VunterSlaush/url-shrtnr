@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: url-shrtnr-postgres-dev
+    environment:
+      POSTGRES_DB: url_shortener_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./apps/api/db/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - url-shrtnr-dev-network
+
+  # NestJS API (Development)
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile.dev
+    container_name: url-shrtnr-api-dev
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/url_shortener_dev
+      JWT_ACCESS_TOKEN_SECRET: dev-access-token-secret
+      JWT_REFRESH_TOKEN_SECRET: dev-refresh-token-secret
+      JWT_TOKEN_ISSUER: url-shrtnr-dev
+      GOOGLE_CLIENT_ID: dev-google-client-id
+      GOOGLE_CLIENT_SECRET: dev-google-client-secret
+      DOMAIN_NAME: localhost
+      APP_URL: http://localhost:3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/api:/app
+      - /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - url-shrtnr-dev-network
+    restart: unless-stopped
+    command: pnpm run dev
+
+  # Next.js Web App (Development)
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile.dev
+    container_name: url-shrtnr-web-dev
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_API_URL: http://localhost:3000
+    ports:
+      - "4321:4321"
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - api
+    networks:
+      - url-shrtnr-dev-network
+    restart: unless-stopped
+    command: pnpm run dev
+
+volumes:
+  postgres_dev_data:
+
+networks:
+  url-shrtnr-dev-network:
+    driver: bridge

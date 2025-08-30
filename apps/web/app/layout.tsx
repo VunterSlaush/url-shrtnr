@@ -8,6 +8,7 @@ import { GoogleButton } from "./components/googleButton";
 import { getUser, isLoggedIn } from "./user";
 import { UserMenu } from "@repo/ui";
 import { logout } from "./actions";
+import { Analytics } from '@vercel/analytics/next';
 
 
 export const metadata: Metadata = {
@@ -34,8 +35,10 @@ export default async function RootLayout({
               {loggedIn ? <UserMenu userName={user.user ?? '👤'} avatarUrl={user.avatar ?? ''} onLogout={logout} /> : <GoogleButton />}
             </div>
             {children}
+
           </main>
         </GoogleOAuthProvider>
+        <Analytics />
       </body>
     </html>
   );

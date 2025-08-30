@@ -2,7 +2,6 @@
   "name": "@repo/api",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "license": "MIT",
   "scripts": {
     "dev": "pnpm build --watch",
