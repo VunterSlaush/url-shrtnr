@@ -26,6 +26,7 @@ export const VisitsPerDay: React.FC<VisitsPerDayProps> = ({ data, className = ''
         data.forEach(item => {
             const date = new Date(item.createdAt);
             const dateKey = date.toISOString().split('T')[0]; // YYYY-MM-DD format
+
             if (dateKey) {
                 visitsByDay.set(dateKey, (visitsByDay.get(dateKey) || 0) + 1);
             }
@@ -36,7 +37,7 @@ export const VisitsPerDay: React.FC<VisitsPerDayProps> = ({ data, className = ''
         for (const [date, visits] of visitsByDay.entries()) {
             sortedData.push({
                 date: new Date(date).toLocaleDateString('en-US', {
-                    month: 'short',
+                    month: 'numeric',
                     day: 'numeric'
                 }),
                 visits
@@ -68,22 +69,19 @@ export const VisitsPerDay: React.FC<VisitsPerDayProps> = ({ data, className = ''
         <Window className={className}>
 
             <h1 className="ui:text-2xl ui:font-bold ui:text-blue-800 ui:mb-4 ui:text-center ui:pt-2">Visits Per Day</h1>
-            <div className="ui:w-full ui:h-56">
-                <ResponsiveContainer width="100%" height="100%">
+            <div className="ui:w-full ui:h-56 ui:p-1">
+                <ResponsiveContainer>
                     <LineChart data={chartData}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                         <XAxis
                             dataKey="date"
                             stroke="#6b7280"
                             fontSize={12}
-                            tickLine={false}
-                            axisLine={false}
+
                         />
                         <YAxis
                             stroke="#6b7280"
                             fontSize={12}
-                            tickLine={false}
-                            axisLine={false}
                             tickFormatter={(value) => value.toString()}
                         />
                         <Tooltip
@@ -94,6 +92,7 @@ export const VisitsPerDay: React.FC<VisitsPerDayProps> = ({ data, className = ''
                                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
                             }}
                             labelStyle={{ color: '#374151' }}
+
                         />
                         <Line
                             type="monotone"

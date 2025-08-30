@@ -141,12 +141,12 @@ export const ShortenerForm: React.FC<Props> = ({ className }) => {
                                 {urlCreated}
                             </button>
                             <p>Share it with your friends!</p>
-                            <div className="flex flex-row gap-4 justify-center">
-                                <FacebookShareButton url={urlCreated} ><FacebookIcon round /></FacebookShareButton>
-                                <TwitterShareButton url={urlCreated} ><TwitterIcon round /></TwitterShareButton>
-                                <WhatsappShareButton url={urlCreated} ><WhatsappIcon round /></WhatsappShareButton>
-                                <EmailShareButton url={urlCreated} ><EmailIcon round /></EmailShareButton>
-                                <TelegramShareButton url={urlCreated} ><TelegramIcon round /></TelegramShareButton>
+                            <div className="flex flex-row gap-2 justify-center">
+                                <FacebookShareButton url={urlCreated} ><FacebookIcon round className="sm:w-16 sm:h-16 w-12 h-12" /></FacebookShareButton>
+                                <TwitterShareButton url={urlCreated} ><TwitterIcon round className="sm:w-16 sm:h-16 w-12 h-12" /></TwitterShareButton>
+                                <WhatsappShareButton url={urlCreated} ><WhatsappIcon round className="sm:w-16 sm:h-16 w-12 h-12" /></WhatsappShareButton>
+                                <EmailShareButton url={urlCreated} ><EmailIcon round className="sm:w-16 sm:h-16 w-12 h-12" /></EmailShareButton>
+                                <TelegramShareButton url={urlCreated} ><TelegramIcon round className="sm:w-16 sm:h-16 w-12 h-12" /></TelegramShareButton>
                             </div>
                         </div>
                     )}

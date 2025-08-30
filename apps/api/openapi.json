@@ -10,6 +10,7 @@
             "description": ""
           }
         },
+        "security": [],
         "tags": [
           "App"
         ]
@@ -17,7 +18,7 @@
     },
     "/urls": {
       "post": {
-        "operationId": "createUrl",
+        "operationId": "shortenUrl",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -42,6 +43,7 @@
             }
           }
         },
+        "security": [],
         "tags": [
           "URLs"
         ]
@@ -94,6 +96,7 @@
             }
           }
         },
+        "security": [],
         "tags": [
           "URLs"
         ]
@@ -184,6 +187,7 @@
             "description": ""
           }
         },
+        "security": [],
         "tags": [
           "Auth"
         ]
@@ -198,6 +202,7 @@
             "description": ""
           }
         },
+        "security": [],
         "tags": [
           "Auth"
         ]
@@ -248,7 +253,7 @@
           }
         },
         "tags": [
-          "User"
+          "Users"
         ]
       }
     },
@@ -277,6 +282,7 @@
             }
           }
         },
+        "security": [],
         "tags": [
           "UrlTracking"
         ]
@@ -396,24 +402,28 @@
             "format": "date-time",
             "type": "string",
             "description": "The date and time the URL was created",
-            "example": "2021-01-01T00:00:00.000Z"
+            "example": "2021-01-01T00:00:00.000Z",
+            "readOnly": true
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
             "description": "The date and time the URL was updated",
-            "example": "2021-01-01T00:00:00.000Z"
+            "example": "2021-01-01T00:00:00.000Z",
+            "readOnly": true
           },
           "deletedAt": {
             "format": "date-time",
             "type": "string",
             "description": "The date and time the URL was deleted",
-            "example": "2021-01-01T00:00:00.000Z"
+            "example": "2021-01-01T00:00:00.000Z",
+            "readOnly": true
           },
           "userId": {
             "type": "string",
             "description": "The ID of the user who created the URL",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "readOnly": true
           }
         },
         "required": [
@@ -439,7 +449,61 @@
       },
       "User": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the user",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "description": "The email of the user",
+            "example": "john.doe@example.com",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the user",
+            "example": "John Doe",
+            "readOnly": true
+          },
+          "providerId": {
+            "type": "string",
+            "description": "The provider ID of the user",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "readOnly": true
+          },
+          "avatarUrl": {
+            "type": "string",
+            "description": "The avatar URL of the user",
+            "example": "https://example.com/avatar.png",
+            "readOnly": true
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The date and time the user was created",
+            "example": "2021-01-01T00:00:00.000Z",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The date and time the user was updated",
+            "example": "2021-01-01T00:00:00.000Z",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "name",
+          "providerId",
+          "avatarUrl",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "UrlTracking": {
         "type": "object",

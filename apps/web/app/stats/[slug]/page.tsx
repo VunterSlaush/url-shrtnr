@@ -68,15 +68,15 @@ export default async function Page({
         const analytics = data.data;
 
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen w-full py-16 sm:py-14 md:py-12 px-4 md:px-8 lg:px-32 xl:px-64 gap-2">
+            <div className="flex flex-col items-center justify-center min-h-screen w-full py-24 sm:py-14 md:py-12 px-4 md:px-8 lg:px-32 xl:px-64 gap-2">
                 <h1 className="text-2xl font-bold text-white">Your URL Analytics from last 30 days</h1>
                 <h2 className="text-lg font-bold text-white mb-4">Slug: {url.slug}</h2>
                 <VisitsPerDay data={analytics} />
-                <div className="flex flex-row  justify-center gap-2 w-full">
+                <div className="flex flex-col md:flex-row justify-center gap-2 w-full">
                     <TopPie data={getTopByProperty(analytics, 'operatingSystem')} title="Top Operating Systems" />
                     <TopPie data={getTopByProperty(analytics, 'deviceType')} title="Top Device Types" />
                 </div>
-                <div className="flex flex-row  justify-center gap-2 w-full">
+                <div className="flex flex-col md:flex-row justify-center gap-2 w-full">
                     <TopBar data={getTopByProperty(analytics, 'browser')} title="Top Browsers" />
                     <TopBar data={getTopByProperty(analytics, 'referrerDomain')} title="Top Referrer Domains" />
                 </div>

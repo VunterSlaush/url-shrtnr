@@ -28,11 +28,13 @@ export const UrlItem: React.FC<UrlItemProps> = ({ url, onDelete, currentDomain }
                         <a href={`${currentDomain}/${url.slug}`} key={url.id} className="ui:text-lg ui:font-semibold ui:text-blue-600 ui:hover:text-blue-800">{currentDomain}/{url.slug}</a>
                         <div className="ui:text-sm ui:text-left">URL:
                             <a
-                                href={`${currentDomain}/${url.url}`}
+                                href={url.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="ui:inline ui:text-sm ui:text-blue-600 ui:hover:text-blue-800 ui:underline ui:hover:no-underline ui:transition-colors ui:duration-200 ui:ml-1"
-                            >{url.url}
+                                title={url.url}
+                            >
+                                {url.url.length > 40 ? `${url.url.substring(0, 40)}...` : url.url}
                             </a>
                         </div>
                     </div>

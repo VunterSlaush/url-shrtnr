@@ -62,6 +62,12 @@ export const UserMenu: React.FC<UserMenuProps> = ({ userName, avatarUrl, onLogou
 
                         {/* Menu Items */}
                         <a
+                            href={'/'}
+                            className="ui:block ui:w-full ui:text-left ui:px-4 ui:py-2 ui:text-sm ui:text-gray-700 hover:ui:bg-gray-100 ui:transition-colors ui:duration-200"
+                        >
+                            Home
+                        </a>
+                        <a
                             href={'/my-urls'}
                             className="ui:block ui:w-full ui:text-left ui:px-4 ui:py-2 ui:text-sm ui:text-gray-700 hover:ui:bg-gray-100 ui:transition-colors ui:duration-200"
                         >

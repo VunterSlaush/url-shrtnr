@@ -32,7 +32,7 @@ export const UrlList = ({ initialUrls }: UrlListProps) => {
     const currentDomain = typeof window !== 'undefined' ? window.location.origin : '';
 
     return (
-        <div className="flex flex-col items-center space-y-4 min-w-1/2">
+        <div className="flex flex-col items-center space-y-4 w-full max-w-2xl px-4 sm:px-6 lg:px-8">
             {urls.map((url) => (
                 <UrlItem key={url.id} url={url} onDelete={onDelete} currentDomain={currentDomain} />
             ))}

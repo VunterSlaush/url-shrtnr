@@ -8,7 +8,7 @@ export default function Page() {
 
   return (
     <main className="flex flex-col items-center justify-between min-h-screen relative">
-      <div className="flex flex-col items-center justify-center mt-24">
+      <div className="flex flex-col items-center justify-center py-24 md:py-32">
         <h1 className="text-6xl font-bold text-center text-white">SHRTNR!</h1>
         <p className="text-lg text-center text-white max-w-xl mt-2">
           Transform your long links into clean, professional shortcuts perfect for social media, emails, and anywhere you need a cleaner web presence.
@@ -23,7 +23,7 @@ export default function Page() {
         <p className="text-center text-white mt-8 mb-4">
           Created by Jesus Mota
         </p>
-        <div className="flex flex-row gap-6">
+        <div className="flex flex-row gap-6 mb-8">
           <a
             href="https://github.com/VunterSlaush"
             target="_blank"
