@@ -9,5 +9,6 @@ export type Env = {
   APP_URL: string;
   NODE_ENV: string;
   PORT: number;
+  SELF_DOMAIN: string;
 };
 

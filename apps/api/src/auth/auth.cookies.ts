@@ -15,7 +15,7 @@ export enum COOKIE {
 }
 
 export const DEFAULT_COOKIE_OPTIONS: CookieOptions = {
-    sameSite: 'lax',
+    sameSite: 'none',
     path: '/',
     httpOnly: true,
     secure: true,
@@ -35,9 +35,11 @@ export const COOKIE_CONFIG: Record<COOKIE, CookieOptions> = {
     },
     [COOKIE.UserName]: {
         ...DEFAULT_COOKIE_OPTIONS,
+        httpOnly: false,
     },
     [COOKIE.UserAvatar]: {
         ...DEFAULT_COOKIE_OPTIONS,
+        httpOnly: false,
     },
 };
 
@@ -47,9 +49,9 @@ const getCookieDomain = (hostname: string): string => {
 };
 
 export function setAuthCookies(res: Response, authUser: AuthResponseDto) {
-    const domain = getCookieDomain(res.req.hostname);
-    const secure = res.req.hostname !== 'localhost';
 
+    const secure = res.req.hostname !== 'localhost';
+    const domain = secure ? getCookieDomain(process.env.APP_URL!.replace('https://', '')) : getCookieDomain(res.req.hostname)
 
     res.cookie(COOKIE.AccessToken, authUser.accessToken.token, {
         ...COOKIE_CONFIG[COOKIE.AccessToken],

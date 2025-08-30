@@ -16,9 +16,11 @@ async function bootstrap() {
     initializeSwagger(app);
   }
 
+
+  const appUrl = configService.getOrThrow('APP_URL');
   app.enableCors({
     credentials: true,
-    origin: ['*'],
+    origin: [appUrl],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     optionsSuccessStatus: 200,
     maxAge: 3600,

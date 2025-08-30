@@ -31,7 +31,7 @@ export default async function RootLayout({
         <Toaster />
         <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}>
           <main className="flex flex-col items-center justify-between min-h-screen relative">
-            <div className="absolute top-8 right-8">
+            <div className="absolute top-8 right-8 z-10">
               {loggedIn ? <UserMenu userName={user.user ?? '👤'} avatarUrl={user.avatar ?? ''} onLogout={logout} /> : <GoogleButton />}
             </div>
             {children}
