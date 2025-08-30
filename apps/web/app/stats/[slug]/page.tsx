@@ -68,7 +68,7 @@ export default async function Page({
         const analytics = data.data;
 
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen w-full py-12 px-4 md:px-8 lg:px-32 xl:px-64 gap-2">
+            <div className="flex flex-col items-center justify-center min-h-screen w-full py-16 sm:py-14 md:py-12 px-4 md:px-8 lg:px-32 xl:px-64 gap-2">
                 <h1 className="text-2xl font-bold text-white">Your URL Analytics from last 30 days</h1>
                 <h2 className="text-lg font-bold text-white mb-4">Slug: {url.slug}</h2>
                 <VisitsPerDay data={analytics} />
