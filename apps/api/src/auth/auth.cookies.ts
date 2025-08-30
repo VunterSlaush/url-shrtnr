@@ -2,7 +2,7 @@ import { Request, Response, CookieOptions } from "express";
 import { AuthResponseDto } from "./auth.types";
 
 
-export const ACCESS_DURATION = 15 * 60 * 1000;
+export const ACCESS_DURATION = 60 * 60 * 1000;
 
 export const REFRESH_TOKEN_DURATION = 30 * 24 * 60 * 60 * 1000; // 1 month in milliseconds
 
@@ -15,7 +15,7 @@ export enum COOKIE {
 }
 
 export const DEFAULT_COOKIE_OPTIONS: CookieOptions = {
-    sameSite: 'none',
+    sameSite: 'lax',
     path: '/',
     httpOnly: true,
     secure: true,
@@ -51,7 +51,7 @@ const getCookieDomain = (hostname: string): string => {
 export function setAuthCookies(res: Response, authUser: AuthResponseDto) {
 
     const secure = res.req.hostname !== 'localhost';
-    const domain = secure ? getCookieDomain(process.env.APP_URL!.replace('https://', '')) : getCookieDomain(res.req.hostname)
+    const domain = getCookieDomain(res.req.hostname)
 
     res.cookie(COOKIE.AccessToken, authUser.accessToken.token, {
         ...COOKIE_CONFIG[COOKIE.AccessToken],
