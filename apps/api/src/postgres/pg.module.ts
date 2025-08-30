@@ -14,7 +14,14 @@ const poolProvider = {
   provide: 'PG_POOL',
   inject: [ConfigService],
   useFactory: async (configService: ConfigService<Env>) => {
-    const pool = new Pool({ connectionString: configService.getOrThrow('DATABASE_URL') });
+    const pool = new Pool({
+      connectionString: configService.getOrThrow('DATABASE_URL'),
+      ssl: configService.get('NODE_ENV') === 'production'
+        ? {
+          rejectUnauthorized: false,
+        }
+        : false
+    });
     await verifyDatabaseConnection(pool);
     return pool;
   },
@@ -25,4 +32,4 @@ const poolProvider = {
   providers: [poolProvider],
   exports: ['PG_POOL'],
 })
-export class PgModule {}
+export class PgModule { }

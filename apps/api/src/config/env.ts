@@ -7,7 +7,7 @@ export type Env = {
   GOOGLE_CLIENT_SECRET: string;
   DOMAIN_NAME: string;
   APP_URL: string;
-
+  NODE_ENV: string;
   PORT: number;
 };
 
