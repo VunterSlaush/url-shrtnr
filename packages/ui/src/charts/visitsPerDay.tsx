@@ -32,26 +32,10 @@ export const VisitsPerDay: React.FC<VisitsPerDayProps> = ({ data, className = ''
             }
         });
 
-        // Convert to array and sort by date
-        const sortedData: ChartDataPoint[] = [];
-        for (const [date, visits] of visitsByDay.entries()) {
-            sortedData.push({
-                date: new Date(date).toLocaleDateString('en-US', {
-                    month: 'numeric',
-                    day: 'numeric'
-                }),
-                visits
-            });
-        }
+        return Array.from(visitsByDay.entries())
+            .sort((a, b) => new Date(a[0]).getTime() - new Date(b[0]).getTime())
+            .map(([date, visits]) => ({ date: date.substring(5).replace('-', '/'), visits }));
 
-        // Sort by date
-        sortedData.sort((a, b) => {
-            const dateA = new Date(a.date);
-            const dateB = new Date(b.date);
-            return dateA.getTime() - dateB.getTime();
-        });
-
-        return sortedData;
     }, [data]);
 
     if (chartData.length === 0) {
